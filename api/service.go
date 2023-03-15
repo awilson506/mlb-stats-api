@@ -10,6 +10,7 @@ import (
 const gameLiveStatus = "I"
 
 type Client interface {
+	// TODO: add some tests against this interface for checking order of results after sorting
 	GetFavoriteMLBStats(favoriteTeamId int, date string) GameStats
 }
 

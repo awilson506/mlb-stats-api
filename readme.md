@@ -1,11 +1,11 @@
 # Golang MLB Stats API 
-A small api wrapper service for getting stats about teams using dates and teamIds.
+A small API wrapper service for getting stats about teams using dates and teamIds.
 
 ## Getting the service setup & running
-If you don't already have go installed you can download it and install it from here [Download Golang](https://go.dev/doc/install)
+If you don't already have Go installed you can download it and install it from here [Download Golang](https://go.dev/doc/install)
 
-Note this application requires the latest go version `1.19` but supports back to `1.17` if you already have a previous version
-installed.  You will have to update the go module to require a later version if you choose not to update.  This can be done by 
+Note this application requires the latest Go version `1.19` but supports back to `1.17` if you already have a previous version
+installed.  You will have to update the Go module to require a later version if you choose not to update.  This can be done by 
 running: 
 ```sh
 go mod edit -go=1.MY_VERSION
@@ -132,7 +132,7 @@ Trimmed Example Response:
 ```
 
 ## Assumptions made
-- The `statusCode` of a `Live` game is `I`
+- The `statusCode` of a live game is `I`
 - Double headers should always have a `doubleheader` status of `Y` or `S`
     - Type `Y` games will have `startTImeTBD` set to true for the second game
     - Type `S` games will have both `gameDate` fields populated 
