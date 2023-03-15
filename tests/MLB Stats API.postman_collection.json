@@ -239,7 +239,7 @@
 					]
 				},
 				{
-					"name": "Get Favorite Stats 2022-03-31 No Games",
+					"name": "Get Favorite Stats 2022-03-31",
 					"request": {
 						"method": "GET",
 						"header": [],

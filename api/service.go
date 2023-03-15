@@ -59,11 +59,12 @@ func (c *client) GetFavoriteMLBStats(favoriteTeamId int, date string) GameStats 
 // sortGames - order games based on there status and or gameDates
 func (c *client) sortGames(games map[int]Game) map[int]Game {
 
-	// check if the games are live
+	// check if the games are live, live status trumps DH logic
 	if games[0].Status.StatusCode == gameLiveStatus {
 		return games
 	}
 
+	// second game is live, bump it up one position
 	if games[1].Status.StatusCode == gameLiveStatus {
 		c.swap(games)
 		return games
@@ -95,7 +96,7 @@ func (c *client) removeGames(games []Game, index int) []Game {
 
 // prependGames - add the sorted games to the begining of the array
 func (c *client) prependGames(games []Game, favoriteGames map[int]Game) []Game {
-	// start from the last spot of to preserve order
+	// start from the last index to preserve order
 	for i := len(favoriteGames) - 1; i >= 0; i-- {
 		games = append([]Game{favoriteGames[i]}, games...)
 	}
