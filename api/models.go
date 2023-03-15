@@ -2,6 +2,7 @@ package api
 
 import "time"
 
+// GameStats - hold an array of game details
 type GameStats struct {
 	Copyright            string `json:"copyright"`
 	TotalItems           int    `json:"totalItems"`
@@ -19,6 +20,7 @@ type GameStats struct {
 	} `json:"dates"`
 }
 
+// Game - Individual game
 type Game struct {
 	GamePk       int       `json:"gamePk"`
 	Link         string    `json:"link"`
