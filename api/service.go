@@ -47,7 +47,7 @@ func (c *client) GetFavoriteMLBStats(favoriteTeamId int, date string) GameStats 
 
 	if gameCount > 1 {
 		// sort the double header games
-		favoriteGames = c.sortGames(favoriteGames)
+		c.sortGames(favoriteGames)
 	}
 
 	// add the games/game back to the the begining of the list
@@ -57,17 +57,17 @@ func (c *client) GetFavoriteMLBStats(favoriteTeamId int, date string) GameStats 
 }
 
 // sortGames - order games based on there status and or gameDates
-func (c *client) sortGames(games map[int]Game) map[int]Game {
+func (c *client) sortGames(games map[int]Game) {
 
 	// check if the games are live, live status trumps DH logic
 	if games[0].Status.StatusCode == gameLiveStatus {
-		return games
+		return
 	}
 
 	// second game is live, bump it up one position
 	if games[1].Status.StatusCode == gameLiveStatus {
 		c.swap(games)
-		return games
+		return
 	}
 
 	// check which type of DH games they are and sort
@@ -81,7 +81,6 @@ func (c *client) sortGames(games map[int]Game) map[int]Game {
 			c.swap(games)
 		}
 	}
-	return games
 }
 
 // swap - swap the game order
