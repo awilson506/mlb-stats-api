@@ -9,8 +9,8 @@ type StatsGetRequest struct {
 	Errors map[string]string
 }
 
-// ValidateContentGetRequest - validate get request parameters, teamId and date
-func ValidateContentGetRequest(teamIdString string, dateString string) (int, *StatsGetRequest, bool) {
+// ValidateStatsGetRequest - validate get request parameters, teamId and date
+func ValidateStatsGetRequest(teamIdString string, dateString string) (int, *StatsGetRequest, bool) {
 	msg := &StatsGetRequest{}
 	msg.Errors = make(map[string]string)
 	teamId, err := strconv.Atoi(teamIdString)

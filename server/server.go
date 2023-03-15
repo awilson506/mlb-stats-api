@@ -25,6 +25,7 @@ func New(addr string, client api.Client) *Server {
 		mux:    http.NewServeMux(),
 	}
 
+	// allow more routes to be implemented in the future
 	handlers := []handler{
 		{pattern: "/v1/stats", handler: s.statsHandler},
 	}
@@ -54,7 +55,7 @@ func (s *Server) statsHandler(w http.ResponseWriter, r *http.Request) {
 
 	strTeamId := r.URL.Query().Get("team-id")
 	date := r.URL.Query().Get("date")
-	teamId, msg, err := api.ValidateContentGetRequest(strTeamId, date)
+	teamId, msg, err := api.ValidateStatsGetRequest(strTeamId, date)
 
 	if err {
 		s.WriteErrorResponse(w, msg.Errors)

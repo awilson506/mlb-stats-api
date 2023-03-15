@@ -5,6 +5,10 @@ import (
 	"os"
 )
 
+// gameLiveStatus - statusCode will be "I" when the game is live it's likely these
+// status' could be kept in a db if this were in production: I, P, S...
+const gameLiveStatus = "I"
+
 type Client interface {
 	GetFavoriteMLBStats(favoriteTeamId int, date string) GameStats
 }
@@ -26,14 +30,14 @@ func (c *client) GetFavoriteMLBStats(favoriteTeamId int, date string) GameStats 
 	favoriteGames := make(map[int]Game)
 	gameCount := 0
 
-	// theres only one game return it
+	// theres only one or no games
 	if len(gameStats.Dates) == 0 || len(gameStats.Dates[0].Games) == 1 {
 		return gameStats
 	}
 
 	for i := 0; i < len(gameStats.Dates[0].Games); i++ {
 		if gameStats.Dates[0].Games[i].Teams.Away.Team.ID == favoriteTeamId || gameStats.Dates[0].Games[i].Teams.Home.Team.ID == favoriteTeamId {
-			// remove the games and build a list of DH games to sort later if need be
+			// remove the games and build a list of games/DH games to sort later if need be
 			favoriteGames[gameCount] = gameStats.Dates[0].Games[i]
 			gameStats.Dates[0].Games = c.removeGames(gameStats.Dates[0].Games, i)
 			i--
@@ -56,11 +60,11 @@ func (c *client) GetFavoriteMLBStats(favoriteTeamId int, date string) GameStats 
 func (c *client) sortGames(games map[int]Game) map[int]Game {
 
 	// check if the games are live
-	if games[0].Status.StatusCode == "I" {
+	if games[0].Status.StatusCode == gameLiveStatus {
 		return games
 	}
 
-	if games[1].Status.StatusCode == "I" {
+	if games[1].Status.StatusCode == gameLiveStatus {
 		c.swap(games)
 		return games
 	}
