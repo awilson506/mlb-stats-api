@@ -21,7 +21,7 @@ type client struct {
 // New - get a new instance of the client
 func New() Client {
 	return &client{
-		logger: log.New(os.Stdout, "", 5),
+		logger: log.New(os.Stdout, "", log.LstdFlags),
 	}
 }
 
@@ -67,7 +67,7 @@ func (c *client) sortGames(games map[int]Game) {
 
 	// second game is live, bump it up one position
 	if games[1].Status.StatusCode == gameLiveStatus {
-		c.swap(games)
+		c.swapGames(games)
 		return
 	}
 
@@ -75,17 +75,17 @@ func (c *client) sortGames(games map[int]Game) {
 	switch gameType := games[0].DoubleHeader; gameType {
 	case "Y":
 		if games[0].Status.StartTimeTBD {
-			c.swap(games)
+			c.swapGames(games)
 		}
 	case "S":
 		if games[0].GameDate.After(games[1].GameDate) {
-			c.swap(games)
+			c.swapGames(games)
 		}
 	}
 }
 
-// swap - swap the game order
-func (c *client) swap(games map[int]Game) {
+// swapGames - swap the game order
+func (c *client) swapGames(games map[int]Game) {
 	games[0], games[1] = games[1], games[0]
 }
 
